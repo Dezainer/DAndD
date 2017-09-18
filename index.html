@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div>
+		<input type="text" name="exp" placeholder="Spell, Ex:2d4+7">
+		<input type="number" name="enemy" placeholder="Enemy's Life">
+		<button onClick="calculateProbabilities()">
+			Calculate Probabilities
+		</button>
+	</div>
+	<div id="results" style="display: none;">
+		<h2>Chances to Kill</h2>
+		<span id="chance"></span>
+
+		<h2>Possible Plays</h2>
+		<ul id="plays"></ul>
+		
+		<h2>Effective Plays</h2>
+		<ul id="effective"></ul>
+	</div>
+</body>
+	<script src="logic.js"></script>
+	<script src="script.js"></script>
+</html>
