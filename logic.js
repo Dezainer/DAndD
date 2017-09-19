@@ -1,6 +1,6 @@
 function calculateOdds(exp, enemy) {
 	let	inf = getData(exp),
-		possibilities = getAllProbs(inf.x, inf.y),
+		possibilities = getAllProbs(inf.x, inf.y, inf.z),
 		effective = getEffectivePlays(possibilities, enemy),
 		percentage = calculatePercentage(effective, possibilities)
 	
@@ -15,8 +15,12 @@ function getData(spell) {
 	let init = spell.split('d'),
 		times = init[0],
 		linit = init[1].split('+'),
-		damage = linit[0],
+		damage = linit[0]
 		extra = linit[1]
+
+		if(extra == null) {
+			extra = '-'+init[1].split('-')[1]
+		}
 
 	return {
 		x: parseInt(times),
@@ -25,7 +29,7 @@ function getData(spell) {
 	}
 }
 
-function getAllProbs(dices, damage) {
+function getAllProbs(dices, damage, extra) {
 	let damages = [],
 		plays = [],
 		playCounter = 0,
@@ -60,6 +64,8 @@ function getAllProbs(dices, damage) {
 
 		if(damages.length == 0) {
 			damages = turns
+		} else if(i == 1) {
+			damages = sumArrays(damages, turns, extra)
 		} else {
 			damages = sumArrays(damages, turns)
 		}
@@ -68,11 +74,14 @@ function getAllProbs(dices, damage) {
 	return mergeInf(damages, plays)
 }
 
-function sumArrays(arr1, arr2) {
+function sumArrays(arr1, arr2, extra) {
 	let result = []
 
 	for (var i = 0; i < arr1.length; i++) {
 		result.push(arr1[i] + arr2[i])
+		if(extra != null) {
+			result[i] += extra
+		}
 	}
 
 	return result
